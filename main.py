@@ -14,6 +14,8 @@ JIRA_API_TOKEN = data['JIRA_API_TOKEN']
 JIRA_SERVER = data['JIRA_SERVER']
 JIRA_QUERY = data['JIRA_QUERY']
 
+ENABLE_HYPERLINK= data['ENABLE_HYPERLINK']
+
 
 
 # Create a JIRA object with API token authentication
@@ -137,6 +139,14 @@ for each_day in hash_table.keys():
 # for each_monday in weekly_hours.keys():
 #     print(f"First Monday of the week: {each_monday} hours logged: {round(weekly_hours[each_monday]['weeklySeconds']/3600,2)}. This is {round(weekly_hours[each_monday]['weeklySeconds']/1440,2)}% of 40 hours week")
 
+def issue_hyperlink(issue,jira_server,enable_hyperlink):
+    if enable_hyperlink:
+        url = jira_server+"/browse/"+issue
+        label = issue
+        hyperlink = f"\033]8;;{url}\033\\{label}\033]8;;\033\\"  # Construct the hyperlink
+        return(hyperlink)
+    else:
+        return(issue)
 
 # Print out weekly and daily report combined
 for each_monday in weekly_hours.keys():
@@ -150,7 +160,7 @@ for each_monday in weekly_hours.keys():
             total_daily_seconds=0
             for each_issue in hash_table[each_day].keys():
                 # each_issue
-                print (f"   {each_issue} {hash_table[each_day][each_issue]['description']} - {round(hash_table[each_day][each_issue]['timeSpentSeconds']/3600,2)}")
+                print (f"   {issue_hyperlink(each_issue,JIRA_SERVER,ENABLE_HYPERLINK)} {hash_table[each_day][each_issue]['description']} - {round(hash_table[each_day][each_issue]['timeSpentSeconds']/3600,2)}")
                 total_daily_seconds+=hash_table[each_day][each_issue]['timeSpentSeconds']
             print(f"   Total daily hours: {round(total_daily_seconds/3600,2)}")
             print("")
