@@ -12,8 +12,13 @@ JIRA_API_TOKEN = data['JIRA_API_TOKEN']
 
 # Jira server information
 JIRA_SERVER = data['JIRA_SERVER']
+# Remove the potential trailing forward slash
+JIRA_SERVER = JIRA_SERVER.rstrip('/')
+
+# Obtain Jira query
 JIRA_QUERY = data['JIRA_QUERY']
 
+# When enabled, list issue will be print out as clickable hyperlink in supported console. If this is an issue, make sure ENABLE_HYPERLINK is set to false in credential.json
 ENABLE_HYPERLINK= data['ENABLE_HYPERLINK']
 
 

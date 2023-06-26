@@ -10,6 +10,8 @@ This python 3 script authenticate to Jira using API token, then retrieve and agg
     
     Copy credential.json.sample to credential.json and modify the content to match your environment
 
+    When ENABLE_HYPERLINK set to true, issue will be print out as clickable hyperlink in supported console for quick access to issue. If this is an issue, make sure ENABLE_HYPERLINK is set to false in credential.json
+
 # To generate Jira API token
 
 - Logon to Jira
