@@ -32,3 +32,11 @@ This python 3 script authenticate to Jira using API token, then retrieve and agg
 - Copy and save your API token
 
     ![API Token](20230626095903.png)
+
+
+# To run the script
+- Make sure credential.json is populated with correct information, see credential.json.sample
+- Run
+    ```
+    python3 main.py
+    ```
