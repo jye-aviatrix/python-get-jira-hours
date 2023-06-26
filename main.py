@@ -69,21 +69,21 @@ for issue in issues:
                 hash_table[worklog_date][issue.key]['timeSpentSeconds']=worklog_seconds
                 hash_table[worklog_date][issue.key]['description']=issue.fields.summary
             
-print("")
-print("Listing daily hours")
-print("")
+# print("")
+# print("Listing daily hours")
+# print("")
 
-# Loop through hash_table to get daily hour report
-for each_day in hash_table.keys():
-    if hash_table[each_day].keys():
-        print(each_day)
-        total_daily_seconds=0
-        for each_issue in hash_table[each_day].keys():
-            # each_issue
-            print (f"   {each_issue} {hash_table[each_day][each_issue]['description']} - {round(hash_table[each_day][each_issue]['timeSpentSeconds']/3600,2)}")
-            total_daily_seconds+=hash_table[each_day][each_issue]['timeSpentSeconds']
-        print(f"   Total daily hours: {total_daily_seconds/3600}")
-        print("")
+# # Loop through hash_table to get daily hour report
+# for each_day in hash_table.keys():
+#     if hash_table[each_day].keys():
+#         print(each_day)
+#         total_daily_seconds=0
+#         for each_issue in hash_table[each_day].keys():
+#             # each_issue
+#             print (f"   {each_issue} {hash_table[each_day][each_issue]['description']} - {round(hash_table[each_day][each_issue]['timeSpentSeconds']/3600,2)}")
+#             total_daily_seconds+=hash_table[each_day][each_issue]['timeSpentSeconds']
+#         print(f"   Total daily hours: {total_daily_seconds/3600}")
+#         print("")
 
 
 # Get first monday of the week based on string value date
@@ -97,10 +97,23 @@ def get_first_monday_of_week(date_string):
     return(monday_first_week.strftime('%Y-%m-%d'))
 
 
+# Get the range from the first Monday to the following Sunday
+def get_week_range(date_string):
+    # Convert the date string to a datetime object
+    date_obj = datetime.strptime(date_string, '%Y-%m-%d').date()    
+    # Find the weekday of the date (Monday is 0 and Sunday is 6)
+    weekday = date_obj.weekday()    
+    # Calculate the Monday of the first week
+    monday_first_week = date_obj - timedelta(days=weekday)    
+    # Calculate the Sunday of the same week
+    sunday_first_week = monday_first_week + timedelta(days=6)    
+    # Format the result as a string
+    range_string = f"{monday_first_week.strftime('%Y-%m-%d')} to {sunday_first_week.strftime('%Y-%m-%d')}"    
+    return range_string
+
+
+
 weekly_hours={}
-print("")
-print("Listing weekly hours")
-print("")
 
 # Loop through hash_table to get seconds of each week aggregated by first Monday of the week.
 for each_day in hash_table.keys():
@@ -112,6 +125,27 @@ for each_day in hash_table.keys():
             weekly_hours[first_monday_of_week]={}
             weekly_hours[first_monday_of_week]['weeklySeconds']=hash_table[each_day][each_issue]['timeSpentSeconds']
 
-# Print out weekly hours by first Monday of the week
+# # Print out weekly hours by first Monday of the week
+# print("")
+# print("Listing weekly hours")
+# print("")
+# for each_monday in weekly_hours.keys():
+#     print(f"First Monday of the week: {each_monday} hours logged: {round(weekly_hours[each_monday]['weeklySeconds']/3600,2)}. This is {round(weekly_hours[each_monday]['weeklySeconds']/1440,2)}% of 40 hours week")
+
+
+# Print out weekly and daily report combined
 for each_monday in weekly_hours.keys():
-    print(f"First Monday of the week: {each_monday} hours logged: {round(weekly_hours[each_monday]['weeklySeconds']/3600,2)}. This is {round(weekly_hours[each_monday]['weeklySeconds']/1440,2)}% of 40 hours week")
+    print("------------------------------------------------------")
+    print(f"Week of: {get_week_range(each_monday)}")
+    print(f"Hours logged: {round(weekly_hours[each_monday]['weeklySeconds']/3600,2)}. This is {round(weekly_hours[each_monday]['weeklySeconds']/1440,2)}% of 40 hours week")
+    print("------------------------------------------------------")
+    for each_day in hash_table.keys():
+        if hash_table[each_day].keys() and each_monday==get_first_monday_of_week(each_day):
+            print(each_day)
+            total_daily_seconds=0
+            for each_issue in hash_table[each_day].keys():
+                # each_issue
+                print (f"   {each_issue} {hash_table[each_day][each_issue]['description']} - {round(hash_table[each_day][each_issue]['timeSpentSeconds']/3600,2)}")
+                total_daily_seconds+=hash_table[each_day][each_issue]['timeSpentSeconds']
+            print(f"   Total daily hours: {round(total_daily_seconds/3600,2)}")
+            print("")
