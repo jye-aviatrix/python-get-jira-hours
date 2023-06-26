@@ -111,6 +111,11 @@ def get_week_range(date_string):
     range_string = f"{monday_first_week.strftime('%Y-%m-%d')} to {sunday_first_week.strftime('%Y-%m-%d')}"    
     return range_string
 
+# Get the name of the day of the week, returns Monday, Tuesday ... Sunday
+def day_name(date_string):
+    date_obj = datetime.strptime(date_string, "%Y-%m-%d").date()
+    day_name = date_obj.strftime("%A")
+    return day_name
 
 
 weekly_hours={}
@@ -141,7 +146,7 @@ for each_monday in weekly_hours.keys():
     print("------------------------------------------------------")
     for each_day in hash_table.keys():
         if hash_table[each_day].keys() and each_monday==get_first_monday_of_week(each_day):
-            print(each_day)
+            print(f"{each_day} {day_name(each_day)}")
             total_daily_seconds=0
             for each_issue in hash_table[each_day].keys():
                 # each_issue
