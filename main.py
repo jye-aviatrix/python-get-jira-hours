@@ -1,9 +1,13 @@
 from jira import JIRA
 from datetime import datetime, timedelta
 import json
+import os
+
+# Get the directory of the current script
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Read the JSON file
-with open('credential.json', 'r') as file:
+with open(f"{script_dir}/credential.json", 'r') as file:
     data = json.load(file)
 
 # Jira account credentials
@@ -169,3 +173,7 @@ for each_monday in weekly_hours.keys():
                 total_daily_seconds+=hash_table[each_day][each_issue]['timeSpentSeconds']
             print(f"   Total daily hours: {round(total_daily_seconds/3600,2)}")
             print("")
+
+
+# Prompt the user to press any key, useful when you are creating a shortcut to run the script, but would like to have the result remain on screen.
+input("Press any key to continue...")

@@ -42,3 +42,14 @@ This python 3 script authenticate to Jira using API token, then retrieve and agg
     ```
     python3 main.py
     ```
+
+
+# Trick to run in Windows + WSL2
+- Create a shortcut target, modify the path to make sure it point to the location of the main.py 
+    ```
+    C:\Windows\System32\wsl.exe python3 /mnt/c/gitrepos/python-get-jira-hours/main.py
+    ```
+- Right click and choose Pin to start
+    ![pin to start](20230626175559.png)
+- Now it's in start menu for quick access
+    ![start menu](20230626175744.png)
