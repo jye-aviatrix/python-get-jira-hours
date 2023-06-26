@@ -175,5 +175,6 @@ for each_monday in weekly_hours.keys():
             print("")
 
 
-# Prompt the user to press any key, useful when you are creating a shortcut to run the script, but would like to have the result remain on screen.
-input("Press any key to continue...")
+# Wait the user to press enter
+# Useful when you are creating a shortcut to run the script, and like to have the result remain on screen.
+input("Press enter to continue...")
