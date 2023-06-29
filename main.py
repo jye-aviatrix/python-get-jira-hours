@@ -42,8 +42,8 @@ current_date = datetime.now().date()
 # Create a blank hash table
 hash_table = {}
 
-# Pre-populate the hash table with date as key of the last four weeks
-for i in range(28, 0, -1):
+# Pre-populate the hash table with date as key of the last five weeks
+for i in range(35, -1, -1):
     # Calculate the date for the current iteration
     date = current_date - timedelta(days=i)
     
