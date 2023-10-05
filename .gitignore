@@ -162,3 +162,5 @@ cython_debug/
 
 token.txt
 credential.json
+.DS_Store
+*.command
